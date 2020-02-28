@@ -6,7 +6,8 @@ const {
   coerceToBoolean,
   coerceToNumber,
   coerceToInt,
-  coerceToString
+  coerceToString,
+  mapDistinct
 } = require('..');
 
 describe('varhelpers', function() {
@@ -166,6 +167,17 @@ describe('varhelpers', function() {
 
     it('should return null if value is null', function() {
       assert.strictEqual(coerceToString(null), null);
+    });
+  });
+
+  describe('mapDistinct', function() {
+    it('should return distinct array', function() {
+      const v = mapDistinct([1, 2, 3, 4, 4, 5, 1]);
+      assert.deepEqual(v, [1, 2, 3, 4, 5]);
+    });
+    it('should use coercer', function() {
+      const v = mapDistinct([1, 2, 3, 4, 4, 5, 1], coerceToString);
+      assert.deepEqual(v, ['1', '2', '3', '4', '5']);
     });
   });
 
