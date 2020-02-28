@@ -1,5 +1,4 @@
 declare module "putil-varhelpers" {
-    export function camelize(v: string, upperCaseFirst?: boolean): string;
 
     export function coalesce(...args: any[]): any;
 
@@ -13,5 +12,9 @@ declare module "putil-varhelpers" {
 
     export function coerceToInt(v: any, defaultValue?: number): any;
 
-    export function mapDistinct<T = any>(a: T[], coercer: (v: any) => T): T[];
+    export function camelize(v: string, upperCaseFirst?: boolean): string;
+
+    export function upperFirst(v: string): string;
+
+    export function mapDistinct<T = any>(a: T[], coercer?: (v: any) => T): T[];
 }

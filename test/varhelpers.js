@@ -1,27 +1,17 @@
 const assert = require('assert');
 const {
-  camelize,
   coalesce,
   coerceToArray,
   coerceToBoolean,
   coerceToNumber,
   coerceToInt,
   coerceToString,
-  mapDistinct
+  mapDistinct,
+  camelize,
+  upperFirst
 } = require('..');
 
 describe('varhelpers', function() {
-
-  describe('camelize', function() {
-    it('should camelize removing (-,_) characters', function() {
-      assert.deepEqual(camelize('any-word'), 'anyWord');
-      assert.deepEqual(camelize('any_word'), 'anyWord');
-    });
-    it('should start with upper character', function() {
-      assert.deepEqual(camelize('any-word', true), 'AnyWord');
-      assert.deepEqual(camelize('any_word', true), 'AnyWord');
-    });
-  });
 
   describe('coalesce', function() {
     it('should return first non null value', function() {
@@ -167,6 +157,26 @@ describe('varhelpers', function() {
 
     it('should return null if value is null', function() {
       assert.strictEqual(coerceToString(null), null);
+    });
+  });
+
+  describe('camelize', function() {
+    it('should camelize removing (-,_) characters', function() {
+      assert.deepEqual(camelize('any-word'), 'anyWord');
+      assert.deepEqual(camelize('any_word'), 'anyWord');
+    });
+    it('should start with upper character', function() {
+      assert.deepEqual(camelize('any-word', true), 'AnyWord');
+      assert.deepEqual(camelize('any_word', true), 'AnyWord');
+    });
+  });
+
+  describe('upperFirst', function() {
+    it('should upper first character', function() {
+      assert.deepEqual(upperFirst('any-word'), 'Any-word');
+    });
+    it('should coerce to string', function() {
+      assert.deepEqual(upperFirst(12345), '12345');
     });
   });
 
