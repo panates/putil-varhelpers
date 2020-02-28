@@ -69,6 +69,10 @@ describe('varhelpers', function() {
       assert.strictEqual(coerceToBoolean(null, 1), true);
       assert.strictEqual(coerceToBoolean(null, 0), false);
     });
+
+    it('should return null if value is null', function() {
+      assert.strictEqual(coerceToBoolean(null), null);
+    });
   });
 
   describe('coerceToNumber', function() {
@@ -88,8 +92,17 @@ describe('varhelpers', function() {
       assert.strictEqual(coerceToNumber(null, '1'), 1);
     });
 
-    it('should return undefined if can not parse value', function() {
-      assert.strictEqual(coerceToNumber('abc'), undefined);
+    it('should throw error if can not parse value', function() {
+      assert.throws(() => coerceToNumber('abc'),
+          /"abc" is not a valid number value/);
+    });
+
+    it('should return default if can not parse value', function() {
+      assert.strictEqual(coerceToNumber('abc', null), null);
+    });
+
+    it('should return null if value is null', function() {
+      assert.strictEqual(coerceToNumber(null), null);
     });
 
   });
@@ -119,8 +132,17 @@ describe('varhelpers', function() {
       assert.strictEqual(coerceToInt(null, '1'), 1);
     });
 
-    it('should return undefined if can not parse value', function() {
-      assert.strictEqual(coerceToInt('abc'), undefined);
+    it('should throw error if can not parse value', function() {
+      assert.throws(() => coerceToInt('abc'),
+          /"abc" is not a valid integer value/);
+    });
+
+    it('should return default if can not parse value', function() {
+      assert.strictEqual(coerceToInt('abc', null), null);
+    });
+
+    it('should return null if value is null', function() {
+      assert.strictEqual(coerceToInt(null), null);
     });
 
   });
@@ -140,6 +162,10 @@ describe('varhelpers', function() {
 
     it('should coerce default value to string', function() {
       assert.strictEqual(coerceToString(null, 1), '1');
+    });
+
+    it('should return null if value is null', function() {
+      assert.strictEqual(coerceToString(null), null);
     });
   });
 
