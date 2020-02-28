@@ -1,9 +1,11 @@
 const assert = require('assert');
 const {
   camelize,
+  coalesce,
   coerceToArray,
   coerceToBoolean,
   coerceToNumber,
+  coerceToInt,
   coerceToString
 } = require('..');
 
@@ -17,6 +19,12 @@ describe('varhelpers', function() {
     it('should start with upper character', function() {
       assert.deepEqual(camelize('any-word', true), 'AnyWord');
       assert.deepEqual(camelize('any_word', true), 'AnyWord');
+    });
+  });
+
+  describe('coalesce', function() {
+    it('should return first non null value', function() {
+      assert.deepEqual(coalesce(null, undefined, 0), 0);
     });
   });
 
@@ -64,11 +72,11 @@ describe('varhelpers', function() {
   });
 
   describe('coerceToNumber', function() {
-    it('should coerce non number value to number', function() {
+    it('should coerce string to number', function() {
       assert.strictEqual(coerceToNumber('1'), 1);
     });
 
-    it('should return same value if value is an number', function() {
+    it('should return same value if value is a number', function() {
       assert.strictEqual(coerceToNumber(1), 1);
     });
 
@@ -82,6 +90,37 @@ describe('varhelpers', function() {
 
     it('should return undefined if can not parse value', function() {
       assert.strictEqual(coerceToNumber('abc'), undefined);
+    });
+
+  });
+
+  describe('coerceToInt', function() {
+    it('should coerce string to integer', function() {
+      assert.strictEqual(coerceToInt('1'), 1);
+    });
+
+    it('should coerce float formatted string value to integer', function() {
+      assert.strictEqual(coerceToInt('1.1'), 1);
+    });
+
+    it('should return same value if value is an integer', function() {
+      assert.strictEqual(coerceToInt(1), 1);
+    });
+
+    it('should return integer value if value is a float number', function() {
+      assert.strictEqual(coerceToInt(1.1), 1);
+    });
+
+    it('should return default value if value is null', function() {
+      assert.strictEqual(coerceToInt(null, 1), 1);
+    });
+
+    it('should coerce default value to number', function() {
+      assert.strictEqual(coerceToInt(null, '1'), 1);
+    });
+
+    it('should return undefined if can not parse value', function() {
+      assert.strictEqual(coerceToInt('abc'), undefined);
     });
 
   });
