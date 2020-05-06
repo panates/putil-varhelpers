@@ -2,15 +2,15 @@ declare module "putil-varhelpers" {
 
     export function coalesce(...args: any[]): any;
 
-    export function coerceToArray(v: any, defaultValue?: any[]): any;
+    export function coerceToArray<T = any>(v: any, defaultValue?: any[]): T[];
 
-    export function coerceToString(v: any, defaultValue?: string): any;
+    export function coerceToString(v: any, defaultValue?: string): string;
 
-    export function coerceToBoolean(v: any, defaultValue?: boolean): any;
+    export function coerceToBoolean(v: any, defaultValue?: boolean): boolean;
 
-    export function coerceToNumber(v: any, defaultValue?: number): any;
+    export function coerceToNumber(v: any, defaultValue?: number): number;
 
-    export function coerceToInt(v: any, defaultValue?: number): any;
+    export function coerceToInt(v: any, defaultValue?: number): number;
 
     export function camelize(v: string, upperCaseFirst?: boolean): string;
 
