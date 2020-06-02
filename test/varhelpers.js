@@ -165,11 +165,13 @@ describe('varhelpers', function() {
       assert.deepEqual(camelize('any-word'), 'anyWord');
       assert.deepEqual(camelize('any_word'), 'anyWord');
       assert.deepEqual(camelize('any word'), 'anyWord');
+      assert.deepEqual(camelize('ANY WORD'), 'anyWord');
     });
     it('should start with upper character', function() {
       assert.deepEqual(camelize('any-word', true), 'AnyWord');
       assert.deepEqual(camelize('any_word', true), 'AnyWord');
       assert.deepEqual(camelize('any word', true), 'AnyWord');
+      assert.deepEqual(camelize('ANY WORD', true), 'AnyWord');
     });
   });
 
