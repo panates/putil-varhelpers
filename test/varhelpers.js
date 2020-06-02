@@ -161,13 +161,15 @@ describe('varhelpers', function() {
   });
 
   describe('camelize', function() {
-    it('should camelize removing (-,_) characters', function() {
+    it('should camelize removing (-,_, ) characters', function() {
       assert.deepEqual(camelize('any-word'), 'anyWord');
       assert.deepEqual(camelize('any_word'), 'anyWord');
+      assert.deepEqual(camelize('any word'), 'anyWord');
     });
     it('should start with upper character', function() {
       assert.deepEqual(camelize('any-word', true), 'AnyWord');
       assert.deepEqual(camelize('any_word', true), 'AnyWord');
+      assert.deepEqual(camelize('any word', true), 'AnyWord');
     });
   });
 
