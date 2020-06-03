@@ -12,7 +12,11 @@ declare module "putil-varhelpers" {
 
     export function coerceToInt(v: any, defaultValue?: number): number;
 
-    export function camelize(v: string, upperCaseFirst?: boolean): string;
+    export function camelize(v: string, pascal?: boolean): string;
+
+    export function camelCase(v: string): string;
+
+    export function pascalCase(v: string): string;
 
     export function upperFirst(v: string): string;
 

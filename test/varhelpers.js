@@ -8,6 +8,8 @@ const {
   coerceToString,
   mapDistinct,
   camelize,
+  camelCase,
+  pascalCase,
   upperFirst
 } = require('..');
 
@@ -160,18 +162,23 @@ describe('varhelpers', function() {
     });
   });
 
-  describe('camelize', function() {
-    it('should camelize removing (-,_, ) characters', function() {
-      assert.deepEqual(camelize('any-word'), 'anyWord');
-      assert.deepEqual(camelize('any_word'), 'anyWord');
-      assert.deepEqual(camelize('any word'), 'anyWord');
-      assert.deepEqual(camelize('ANY WORD'), 'anyWord');
+  describe('camelCase', function() {
+    it('should convert sentence to camel case', function() {
+      assert.strictEqual(camelCase('any-word'), 'anyWord');
+      assert.strictEqual(camelCase('any_word'), 'anyWord');
+      assert.strictEqual(camelCase('any word'), 'anyWord');
+      assert.strictEqual(camelCase('ANY WORD'), 'ANYWORD');
+      assert.strictEqual(camelCase('AnyWord'), 'AnyWord');
+      assert.strictEqual(camelize('any-word'), 'anyWord');
     });
-    it('should start with upper character', function() {
-      assert.deepEqual(camelize('any-word', true), 'AnyWord');
-      assert.deepEqual(camelize('any_word', true), 'AnyWord');
-      assert.deepEqual(camelize('any word', true), 'AnyWord');
-      assert.deepEqual(camelize('ANY WORD', true), 'AnyWord');
+  });
+
+  describe('pascalCase', function() {
+    it('should convert sentence to pascal case', function() {
+      assert.strictEqual(pascalCase('any-word'), 'AnyWord');
+      assert.strictEqual(pascalCase('any_word'), 'AnyWord');
+      assert.strictEqual(pascalCase('any word'), 'AnyWord');
+      assert.strictEqual(camelize('any-word', true), 'AnyWord');
     });
   });
 
