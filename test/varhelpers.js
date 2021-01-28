@@ -10,21 +10,23 @@ const {
   camelize,
   camelCase,
   pascalCase,
-  upperFirst
+  upperFirst,
+  coerceToDate,
+  parseDate
 } = require('..');
 
 describe('varhelpers', function() {
 
   describe('coalesce', function() {
     it('should return first non null value', function() {
-      assert.deepEqual(coalesce(null, undefined, 0), 0);
+      assert.deepStrictEqual(coalesce(null, undefined, 0), 0);
     });
   });
 
   describe('coerceToArray', function() {
     it('should coerce non array value to array', function() {
       const v = 'a';
-      assert.deepEqual(coerceToArray(v), [v]);
+      assert.deepStrictEqual(coerceToArray(v), [v]);
     });
 
     it('should return same object if value is an array', function() {
@@ -39,7 +41,7 @@ describe('varhelpers', function() {
 
     it('should coerce default value to array', function() {
       const d = 1;
-      assert.deepEqual(coerceToArray(null, d), [d]);
+      assert.deepStrictEqual(coerceToArray(null, d), [d]);
     });
   });
 
@@ -162,6 +164,83 @@ describe('varhelpers', function() {
     });
   });
 
+  describe('coerceToDate', function() {
+    it('should keep Date value', function() {
+      const d = new Date();
+      assert.strictEqual(coerceToDate(d), d);
+    });
+
+    it('should coerce number value to date', function() {
+      assert.ok(coerceToDate(0) instanceof Date);
+    });
+
+    it('should coerce string value to date', function() {
+      const d = new Date('2011-11-23T10:30:28.123+01:00');
+      assert.deepStrictEqual(coerceToDate('2011-11-23T10:30:28.123+01:00'), d);
+      assert.deepStrictEqual(coerceToDate('2011-11-23 10:30:28.123+01:00'), d);
+    });
+
+  });
+
+  describe('parseDate', function() {
+
+    it('should parse YYYY string value to date', function() {
+      const d = new Date('2011-01-01T00:00:00');
+      assert.deepStrictEqual(parseDate('2011'), d);
+    });
+
+    it('should parse YYYY-MM string value to date', function() {
+      const d = new Date('2011-11-01T00:00:00');
+      assert.deepStrictEqual(parseDate('2011-11'), d);
+    });
+
+    it('should parse YYYY-MM-DD string value to date', function() {
+      const d = new Date('2011-11-23T00:00:00');
+      assert.deepStrictEqual(parseDate('2011-11-23'), d);
+    });
+
+    it('should parse YYYY-MM-DD HH:MM string value to date', function() {
+      const d = new Date('2011-11-23T10:30:00');
+      assert.deepStrictEqual(parseDate('2011-11-23T10:30'), d);
+      assert.deepStrictEqual(parseDate('2011-11-23 10:30'), d);
+    });
+
+    it('should parse YYYY-MM-DD HH:MM:SS string value to date', function() {
+      const d = new Date('2011-11-23T10:30:28');
+      assert.deepStrictEqual(parseDate('2011-11-23T10:30:28'), d);
+      assert.deepStrictEqual(parseDate('2011-11-23 10:30:28'), d);
+    });
+
+    it('should parse YYYY-MM-DD HH:MM:SS.sss string value to date', function() {
+      const d = new Date('2011-11-23T10:30:28.123');
+      assert.deepStrictEqual(parseDate('2011-11-23T10:30:28.123'), d);
+      assert.deepStrictEqual(parseDate('2011-11-23 10:30:28.123'), d);
+    });
+
+    it('should parse YYYY-MM-DD HH:MM:SS.sssTz string value to date', function() {
+      const d = new Date('2011-11-23T10:30:28.123+01:00');
+      assert.deepStrictEqual(parseDate('2011-11-23T10:30:28.123+01:00'), d);
+      assert.deepStrictEqual(parseDate('2011-11-23 10:30:28.123+01:00'), d);
+    });
+
+    it('should parse YYYY-MM-DD HH:MM:SS.sssZ string value to date', function() {
+      const d = new Date('2011-11-23T10:30:28.123Z');
+      assert.deepStrictEqual(parseDate('2011-11-23T10:30:28.123Z'), d);
+      assert.deepStrictEqual(parseDate('2011-11-23 10:30:28.123Z'), d);
+    });
+
+    it('should ignore time', function() {
+      const d = new Date('2011-11-23T00:00:00');
+      assert.deepStrictEqual(parseDate('2011-11-23T10:30:28.123Z', {dateOnly: true}), d);
+    });
+
+    it('should ignore time', function() {
+      const d = new Date('2011-11-23T10:30:28.123');
+      assert.deepStrictEqual(parseDate('2011-11-23T10:30:28.123+08:00', {ignoreTimezone: true}), d);
+    });
+
+  });
+
   describe('camelCase', function() {
     it('should convert sentence to camel case', function() {
       assert.strictEqual(camelCase('any-word'), 'anyWord');
@@ -184,21 +263,21 @@ describe('varhelpers', function() {
 
   describe('upperFirst', function() {
     it('should upper first character', function() {
-      assert.deepEqual(upperFirst('any-word'), 'Any-word');
+      assert.deepStrictEqual(upperFirst('any-word'), 'Any-word');
     });
     it('should coerce to string', function() {
-      assert.deepEqual(upperFirst(12345), '12345');
+      assert.deepStrictEqual(upperFirst(12345), '12345');
     });
   });
 
   describe('mapDistinct', function() {
     it('should return distinct array', function() {
       const v = mapDistinct([1, 2, 3, 4, 4, 5, 1]);
-      assert.deepEqual(v, [1, 2, 3, 4, 5]);
+      assert.deepStrictEqual(v, [1, 2, 3, 4, 5]);
     });
     it('should use coercer', function() {
       const v = mapDistinct([1, 2, 3, 4, 4, 5, 1], coerceToString);
-      assert.deepEqual(v, ['1', '2', '3', '4', '5']);
+      assert.deepStrictEqual(v, ['1', '2', '3', '4', '5']);
     });
   });
 

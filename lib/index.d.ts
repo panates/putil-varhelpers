@@ -6,11 +6,20 @@ declare module "putil-varhelpers" {
 
     export function coerceToString(v: any, defaultValue?: string): string;
 
-    export function coerceToBoolean(v: any, defaultValue?: boolean): boolean;
+    export function coerceToBoolean(v: any, defaultValue?: boolean): boolean | null | undefined;
 
-    export function coerceToNumber(v: any, defaultValue?: number): number;
+    export function coerceToNumber(v: any, defaultValue?: number): number | null | undefined;
 
-    export function coerceToInt(v: any, defaultValue?: number): number;
+    export function coerceToInt(v: any, defaultValue?: number): number | null | undefined;
+
+    export function coerceToDate(value: Date | String | null | undefined,
+                                 defaultValue?: Date): Date | null | undefined;
+
+    export function parseDate(value: String,
+                              options?: {
+                                  dateOnly?: boolean;
+                                  ignoreTimezone?: boolean;
+                              }): Date;
 
     export function camelize(v: string, pascal?: boolean): string;
 
