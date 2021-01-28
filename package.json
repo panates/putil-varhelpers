@@ -1,7 +1,7 @@
 {
   "name": "putil-varhelpers",
   "description": "Helper methods for manipulating variables",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "author": "Panates",
   "contributors": [
     "Eray Hanoglu <e.hanoglu@panates.com>",
