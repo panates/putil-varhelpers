@@ -65,8 +65,8 @@ describe('varhelpers', function() {
       assert.strictEqual(coerceToBoolean(null, 0), false);
     });
 
-    it('should return null if value is null', function() {
-      assert.strictEqual(coerceToBoolean(null), null);
+    it('should return undefined if value is null', function() {
+      assert.strictEqual(coerceToBoolean(null), undefined);
     });
   });
 
@@ -93,11 +93,11 @@ describe('varhelpers', function() {
     });
 
     it('should return default if can not parse value', function() {
-      assert.strictEqual(coerceToNumber('abc', null), null);
+      assert.strictEqual(coerceToNumber('abc', 1), 1);
     });
 
-    it('should return null if value is null', function() {
-      assert.strictEqual(coerceToNumber(null), null);
+    it('should return undefined if value is null', function() {
+      assert.strictEqual(coerceToNumber(null), undefined);
     });
 
   });
@@ -133,11 +133,11 @@ describe('varhelpers', function() {
     });
 
     it('should return default if can not parse value', function() {
-      assert.strictEqual(coerceToInt('abc', null), null);
+      assert.strictEqual(coerceToInt('abc', 0), 0);
     });
 
-    it('should return null if value is null', function() {
-      assert.strictEqual(coerceToInt(null), null);
+    it('should return undefined if value is null', function() {
+      assert.strictEqual(coerceToInt(null), undefined);
     });
 
   });
@@ -159,8 +159,8 @@ describe('varhelpers', function() {
       assert.strictEqual(coerceToString(null, 1), '1');
     });
 
-    it('should return null if value is null', function() {
-      assert.strictEqual(coerceToString(null), null);
+    it('should return undefined if value is null', function() {
+      assert.strictEqual(coerceToString(null), undefined);
     });
   });
 
