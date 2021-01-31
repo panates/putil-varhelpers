@@ -7,7 +7,6 @@ const {
   coerceToInt,
   coerceToString,
   mapDistinct,
-  camelize,
   camelCase,
   pascalCase,
   upperFirst,
@@ -248,7 +247,6 @@ describe('varhelpers', function() {
       assert.strictEqual(camelCase('any word'), 'anyWord');
       assert.strictEqual(camelCase('ANY WORD'), 'ANYWORD');
       assert.strictEqual(camelCase('AnyWord'), 'AnyWord');
-      assert.strictEqual(camelize('any-word'), 'anyWord');
     });
   });
 
@@ -257,7 +255,6 @@ describe('varhelpers', function() {
       assert.strictEqual(pascalCase('any-word'), 'AnyWord');
       assert.strictEqual(pascalCase('any_word'), 'AnyWord');
       assert.strictEqual(pascalCase('any word'), 'AnyWord');
-      assert.strictEqual(camelize('any-word', true), 'AnyWord');
     });
   });
 
