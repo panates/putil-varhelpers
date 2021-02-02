@@ -55,6 +55,13 @@ describe('varhelpers', function() {
       assert.strictEqual(toBoolean(false), false);
     });
 
+    it('should return "true,t,1,yes,y" string as true', function() {
+      assert.strictEqual(toBoolean('true'), true);
+      assert.strictEqual(toBoolean('t'), true);
+      assert.strictEqual(toBoolean('1'), true);
+      assert.strictEqual(toBoolean('y'), true);
+    });
+
     it('should return default value if value is null', function() {
       assert.strictEqual(toBooleanDef(null, true), true);
     });
