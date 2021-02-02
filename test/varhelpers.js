@@ -1,16 +1,16 @@
 const assert = require('assert');
 const {
   coalesce,
-  coerceToArray,
-  coerceToBoolean,
-  coerceToNumber,
-  coerceToInt,
-  coerceToString,
+  toArray, toArrayDef,
+  toBoolean, toBooleanDef,
+  toNumber, toNumberDef,
+  toInt, toIntDef,
+  toString, toStringDef,
+  toDate, toDateDef,
   mapDistinct,
   camelCase,
   pascalCase,
   upperFirst,
-  coerceToDate,
   parseDate
 } = require('..');
 
@@ -22,161 +22,158 @@ describe('varhelpers', function() {
     });
   });
 
-  describe('coerceToArray', function() {
+  describe('toArray', function() {
     it('should coerce non array value to array', function() {
       const v = 'a';
-      assert.deepStrictEqual(coerceToArray(v), [v]);
+      assert.deepStrictEqual(toArray(v), [v]);
     });
 
     it('should return same object if value is an array', function() {
       const v = [1];
-      assert.strictEqual(coerceToArray(v), v);
+      assert.strictEqual(toArray(v), v);
     });
 
     it('should return default value if value is null', function() {
       let d = [1];
-      assert.strictEqual(coerceToArray(null, d), d);
+      assert.strictEqual(toArrayDef(null, d), d);
     });
 
     it('should coerce default value to array', function() {
       const d = 1;
-      assert.deepStrictEqual(coerceToArray(null, d), [d]);
+      assert.deepStrictEqual(toArrayDef(null, d), [d]);
     });
   });
 
-  describe('coerceToBoolean', function() {
+  describe('toBoolean', function() {
     it('should coerce non boolean value to boolean', function() {
-      assert.strictEqual(coerceToBoolean(1), true);
-      assert.strictEqual(coerceToBoolean(0), false);
+      assert.strictEqual(toBoolean(1), true);
+      assert.strictEqual(toBoolean(0), false);
     });
 
     it('should return same value if value is an boolean', function() {
-      assert.strictEqual(coerceToBoolean(true), true);
-      assert.strictEqual(coerceToBoolean(false), false);
+      assert.strictEqual(toBoolean(true), true);
+      assert.strictEqual(toBoolean(false), false);
     });
 
     it('should return default value if value is null', function() {
-      assert.strictEqual(coerceToBoolean(null, true), true);
+      assert.strictEqual(toBooleanDef(null, true), true);
     });
 
     it('should coerce default value to boolean', function() {
-      assert.strictEqual(coerceToBoolean(null, 1), true);
-      assert.strictEqual(coerceToBoolean(null, 0), false);
+      assert.strictEqual(toBooleanDef(null, 1), true);
+      assert.strictEqual(toBooleanDef(null, 0), false);
     });
 
     it('should return undefined if value is null', function() {
-      assert.strictEqual(coerceToBoolean(null), undefined);
+      assert.strictEqual(toBoolean(null), undefined);
     });
   });
 
-  describe('coerceToNumber', function() {
+  describe('toNumber', function() {
     it('should coerce string to number', function() {
-      assert.strictEqual(coerceToNumber('1'), 1);
+      assert.strictEqual(toNumber('1'), 1);
     });
 
     it('should return same value if value is a number', function() {
-      assert.strictEqual(coerceToNumber(1), 1);
+      assert.strictEqual(toNumber(1), 1);
     });
 
     it('should return default value if value is null', function() {
-      assert.strictEqual(coerceToNumber(null, 1), 1);
+      assert.strictEqual(toNumberDef(null, 1), 1);
     });
 
     it('should coerce default value to number', function() {
-      assert.strictEqual(coerceToNumber(null, '1'), 1);
+      assert.strictEqual(toNumberDef(null, '1'), 1);
     });
 
     it('should throw error if can not parse value', function() {
-      assert.throws(() => coerceToNumber('abc'),
+      assert.throws(() => toNumber('abc'),
           /"abc" is not a valid number value/);
     });
 
-    it('should return default if can not parse value', function() {
-      assert.strictEqual(coerceToNumber('abc', 1), 1);
-    });
-
     it('should return undefined if value is null', function() {
-      assert.strictEqual(coerceToNumber(null), undefined);
+      assert.strictEqual(toNumber(null), undefined);
     });
 
   });
 
-  describe('coerceToInt', function() {
+  describe('toInt', function() {
     it('should coerce string to integer', function() {
-      assert.strictEqual(coerceToInt('1'), 1);
+      assert.strictEqual(toInt('1'), 1);
     });
 
     it('should coerce float formatted string value to integer', function() {
-      assert.strictEqual(coerceToInt('1.1'), 1);
+      assert.strictEqual(toInt('1.1'), 1);
     });
 
     it('should return same value if value is an integer', function() {
-      assert.strictEqual(coerceToInt(1), 1);
+      assert.strictEqual(toInt(1), 1);
     });
 
     it('should return integer value if value is a float number', function() {
-      assert.strictEqual(coerceToInt(1.1), 1);
+      assert.strictEqual(toInt(1.1), 1);
     });
 
     it('should return default value if value is null', function() {
-      assert.strictEqual(coerceToInt(null, 1), 1);
+      assert.strictEqual(toIntDef(null, 1), 1);
     });
 
     it('should coerce default value to number', function() {
-      assert.strictEqual(coerceToInt(null, '1'), 1);
+      assert.strictEqual(toIntDef(null, '1'), 1);
     });
 
     it('should throw error if can not parse value', function() {
-      assert.throws(() => coerceToInt('abc'),
+      assert.throws(() => toInt('abc'),
           /"abc" is not a valid integer value/);
     });
 
-    it('should return default if can not parse value', function() {
-      assert.strictEqual(coerceToInt('abc', 0), 0);
-    });
-
     it('should return undefined if value is null', function() {
-      assert.strictEqual(coerceToInt(null), undefined);
+      assert.strictEqual(toInt(null), undefined);
     });
 
   });
 
-  describe('coerceToString', function() {
+  describe('toString', function() {
     it('should coerce non string value to string', function() {
-      assert.strictEqual(coerceToString(1), '1');
+      assert.strictEqual(toString(1), '1');
     });
 
     it('should return same value if value is an string', function() {
-      assert.strictEqual(coerceToString('1'), '1');
+      assert.strictEqual(toString('1'), '1');
     });
 
     it('should return default value if value is null', function() {
-      assert.strictEqual(coerceToString(null, '1'), '1');
+      assert.strictEqual(toStringDef(null, '1'), '1');
     });
 
     it('should coerce default value to string', function() {
-      assert.strictEqual(coerceToString(null, 1), '1');
+      assert.strictEqual(toStringDef(null, 1), '1');
     });
 
     it('should return undefined if value is null', function() {
-      assert.strictEqual(coerceToString(null), undefined);
+      assert.strictEqual(toString(null), undefined);
     });
   });
 
-  describe('coerceToDate', function() {
+  describe('toDate', function() {
     it('should keep Date value', function() {
       const d = new Date();
-      assert.strictEqual(coerceToDate(d), d);
+      assert.strictEqual(toDate(d), d);
     });
 
     it('should coerce number value to date', function() {
-      assert.ok(coerceToDate(0) instanceof Date);
+      assert.ok(toDate(0) instanceof Date);
     });
 
     it('should coerce string value to date', function() {
       const d = new Date('2011-11-23T10:30:28.123+01:00');
-      assert.deepStrictEqual(coerceToDate('2011-11-23T10:30:28.123+01:00'), d);
-      assert.deepStrictEqual(coerceToDate('2011-11-23 10:30:28.123+01:00'), d);
+      assert.deepStrictEqual(toDate('2011-11-23T10:30:28.123+01:00'), d);
+      assert.deepStrictEqual(toDate('2011-11-23 10:30:28.123+01:00'), d);
+    });
+
+    it('should return default value if value is null', function() {
+      const d = new Date();
+      assert.strictEqual(toDateDef(null, d), d);
     });
 
   });
@@ -273,7 +270,7 @@ describe('varhelpers', function() {
       assert.deepStrictEqual(v, [1, 2, 3, 4, 5]);
     });
     it('should use coercer', function() {
-      const v = mapDistinct([1, 2, 3, 4, 4, 5, 1], coerceToString);
+      const v = mapDistinct([1, 2, 3, 4, 4, 5, 1], toString);
       assert.deepStrictEqual(v, ['1', '2', '3', '4', '5']);
     });
   });
