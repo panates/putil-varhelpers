@@ -20,7 +20,6 @@
     "coalesce",
     "camelize"
   ],
-  "dependencies": {},
   "devDependencies": {
     "eslint": "^7.19.0",
     "eslint-config-google": "^0.14.0",
