@@ -18,11 +18,11 @@ declare module "putil-varhelpers" {
 
     export function toNumber(v: number | string | null | undefined): Maybe<number>;
 
-    export function toNumberDef(v: number | string | null, defaultValue: number): number;
+    export function toNumberDef(v: number | string | null | undefined, defaultValue: number): number;
 
     export function toInt(v: number | string | null | undefined): Maybe<number>;
 
-    export function toIntDef(v: number | string | null, defaultValue: number): number;
+    export function toIntDef(v: number | string | null | undefined, defaultValue: number): number;
 
     export function toDate(value: Date | String | null | undefined): Maybe<Date>;
 
